@@ -37,13 +37,11 @@ public class QRCodeReader : MonoBehaviour {
 	[SerializeField]
 	private Material material;
 
-	private UnityARSessionNativeInterface arSession;
 	private Matrix4x4 displayTransformInverse;
 	private Vector3[] corners = new Vector3[4];
 
 
 	void Start () {
-		arSession = UnityARSessionNativeInterface.GetARSessionNativeInterface ();
 		UnityARSessionNativeInterface.ARFrameUpdatedEvent += ARFrameUpdated;
 	}
 	
@@ -58,7 +56,7 @@ public class QRCodeReader : MonoBehaviour {
 	}
 
 	void Update () {
-		ARTextureHandles handles = arSession.GetARVideoTextureHandles ();
+		ARTextureHandles handles = UnityARSessionNativeInterface.GetARSessionNativeInterface ().GetARVideoTextureHandles ();
 		if (handles.textureY != System.IntPtr.Zero) {
 			ReadQRCode (handles.textureY.ToInt64 ());
 		}
